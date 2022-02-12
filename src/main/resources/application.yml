@@ -1,6 +1,47 @@
+server:
+  port: 8000
+  servlet:
+#    context-path: /blog
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 spring:
+#  TempControllerTest.java에서 jsp 같은 정적파일 다룰 시 주석 제거하여 실행
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
     username: cos
     password: cos1234
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update      #프로젝트 실행할 때마다 테이블을 새로 만들겠다. 최초: create -> 나중: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl   #테이블(entity)를 만들 때 변수면 그대로 테이블을 만든다는 의미
+      use-new-id-generator-mappings: false    #false: jpa의 기본 넘버링 전략을 따라가지 않는다는 의미
+    show-sql: true        #콘솔창에 보여주기
+    properties:
+      hibernate.format_sql: true      #콘솔창에 보여줄 때 이쁘게 줄바꿈해서 보여줌
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+# 정말 중요한 키이니 노출되면 안됨!!!
+cos:
+  key: cos1234
